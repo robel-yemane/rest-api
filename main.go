@@ -7,18 +7,20 @@ import (
 	"os"
 
 	"github.com/robel-yemane/rest-api/types"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 
 	echo "github.com/labstack/echo/v4"
 )
 
-// album slice to seed record album data.
-var albums = []types.Album{
-	{ID: "1", Title: "Ygermenalo", Artist: "Yohannes Tikabo", Price: 30},
-	{ID: "2", Title: "Semai", Artist: "Abraham Afewerki", Price: 40},
-	{ID: "3", Title: "Lilo", Artist: "Temesgen Yared", Price: 50},
-}
+// // album slice to seed record album data.
+//
+//	var albums = []types.Album{
+//		{ID: "1", Title: "Ygermenalo", Artist: "Yohannes Tikabo", Price: 30},
+//		{ID: "2", Title: "Semai", Artist: "Abraham Afewerki", Price: 40},
+//		{ID: "3", Title: "Lilo", Artist: "Temesgen Yared", Price: 50},
+//	}
 var collection *mongo.Collection
 var client *mongo.Client
 
@@ -29,17 +31,25 @@ func init() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	log.Println("Connected to MongoDB!")
+
 	err = client.Ping(context.Background(), nil)
 	if err != nil {
 		log.Fatal(err)
 	}
-	log.Println("Connected to pinged MongoDB!")
+	log.Println("Connected to and pinged MongoDB!")
 
 }
 
 // // getAlbums responds with the list of all albums as JSON
 func getAlbums(c echo.Context) error {
+	var albums []types.Album
+	cursor, err := collection.Find(context.TODO(), bson.D{{}})
+	if err != nil {
+		return c.JSON(http.StatusNotFound, "err: "+err.Error())
+	}
+	if err = cursor.All(context.Background(), &albums); err != nil {
+		return c.JSON(http.StatusNotFound, "err: "+err.Error())
+	}
 	return c.JSON(http.StatusOK, albums)
 }
 
@@ -48,22 +58,12 @@ func getAlbums(c echo.Context) error {
 func getAlbumByID(c echo.Context) error {
 	id := c.Param("id")
 	var album types.Album
-	err := collection.FindOne(context.TODO(), types.Album{ID: id}).Decode(&album)
+	err := collection.FindOne(context.TODO(), bson.D{{Key: "id", Value: id}}).Decode(&album)
 	if err != nil {
 
 		return c.JSON(http.StatusNotFound, "album not found")
 	}
 	return c.JSON(http.StatusOK, album)
-	// // loop over the list of albums, looking for
-	// // an album whose ID value matches the parameter.
-	// for _, a := range albums {
-	// 	if a.ID == id {
-	// 		return c.JSON(http.StatusOK, a)
-
-	// 	}
-	// }
-	// return c.JSON(http.StatusNotFound, "album not found")
-
 }
 
 // postAlbums adds an album from JSON received in the request body
@@ -78,7 +78,6 @@ func postAlbums(c echo.Context) error {
 		log.Fatal(err)
 	}
 	log.Println("Inserted a single document: ", insertResult.InsertedID)
-	albums = append(albums, newAlbum)
 	return c.JSON(http.StatusCreated, newAlbum)
 }
 
