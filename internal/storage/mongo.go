@@ -4,7 +4,7 @@ import (
 	"context"
 	"log"
 
-	"github.com/robel-yemane/rest-api/models"
+	"github.com/robel-yemane/rest-api/internal/models"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"

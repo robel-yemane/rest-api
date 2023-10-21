@@ -1,6 +1,6 @@
 package storage
 
-import "github.com/robel-yemane/rest-api/models"
+import "github.com/robel-yemane/rest-api/internal/models"
 
 type AlbumStorer interface {
 	GetAlbums() ([]models.Album, error)

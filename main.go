@@ -3,8 +3,8 @@ package main
 import (
 	"os"
 
-	"github.com/robel-yemane/rest-api/handlers"
-	"github.com/robel-yemane/rest-api/storage"
+	"github.com/robel-yemane/rest-api/internal/handlers"
+	"github.com/robel-yemane/rest-api/internal/storage"
 
 	echo "github.com/labstack/echo/v4"
 )

@@ -4,8 +4,8 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo/v4"
-	"github.com/robel-yemane/rest-api/models"
-	"github.com/robel-yemane/rest-api/storage"
+	"github.com/robel-yemane/rest-api/internal/models"
+	"github.com/robel-yemane/rest-api/internal/storage"
 )
 
 // GetAlbums handles the GET /v1/albums route
