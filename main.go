@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/robel-yemane/rest-api/types"
+	"github.com/robel-yemane/rest-api/models"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -42,7 +42,7 @@ func init() {
 
 // // getAlbums responds with the list of all albums as JSON
 func getAlbums(c echo.Context) error {
-	var albums []types.Album
+	var albums []models.Album
 	cursor, err := collection.Find(context.TODO(), bson.D{{}})
 	if err != nil {
 		return c.JSON(http.StatusNotFound, "err: "+err.Error())
@@ -57,7 +57,7 @@ func getAlbums(c echo.Context) error {
 // parameter sent by the client, then returns that album as a response.
 func getAlbumByID(c echo.Context) error {
 	id := c.Param("id")
-	var album types.Album
+	var album models.Album
 	err := collection.FindOne(context.TODO(), bson.D{{Key: "id", Value: id}}).Decode(&album)
 	if err != nil {
 
@@ -68,7 +68,7 @@ func getAlbumByID(c echo.Context) error {
 
 // postAlbums adds an album from JSON received in the request body
 func postAlbums(c echo.Context) error {
-	var newAlbum types.Album
+	var newAlbum models.Album
 	//Call BindJSON to bind the received JSON to newAlbum
 	if err := c.Bind(&newAlbum); err != nil {
 		return err

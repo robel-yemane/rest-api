@@ -1,4 +1,4 @@
-package types
+package models
 
 type Album struct {
 	ID     string  `json:"id,omitempty" bson:"id,omitempty"`
