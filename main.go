@@ -14,13 +14,13 @@ import (
 	echo "github.com/labstack/echo/v4"
 )
 
-// // album slice to seed record album data.
-//
-//	var albums = []types.Album{
-//		{ID: "1", Title: "Ygermenalo", Artist: "Yohannes Tikabo", Price: 30},
-//		{ID: "2", Title: "Semai", Artist: "Abraham Afewerki", Price: 40},
-//		{ID: "3", Title: "Lilo", Artist: "Temesgen Yared", Price: 50},
-//	}
+// var album = types.Album{
+// 	ID:     "1",
+// 	Title:  "Ygermenalo",
+// 	Artist: "Yohannes Tikabo",
+// 	Price:  30,
+// }
+
 var collection *mongo.Collection
 var client *mongo.Client
 
