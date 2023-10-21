@@ -8,3 +8,6 @@ pd-up:
 .PHONY: podman-down
 pd-down:
 	podman-compose down
+
+run: pd-up
+	go run main.go
