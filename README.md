@@ -12,7 +12,7 @@ This project is a RESTful API for an album store, implemented in Go. It's design
 - Makefile for easy build and run commands
 
 ## Project Structure
-
+```
 .
 ├── Makefile
 ├── README.md
@@ -29,7 +29,7 @@ This project is a RESTful API for an album store, implemented in Go. It's design
 ├── main.go
 ├── podman-compose.yml
 └── todo.md
-
+```
 
 ## Prerequisites
 - Go (version 1.17+)
